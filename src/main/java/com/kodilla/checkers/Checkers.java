@@ -1,7 +1,9 @@
 package com.kodilla.checkers;
 
 import javafx.application.Application;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,28 +24,31 @@ public class Checkers extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
-        BackgroundImage backgroundImage = new BackgroundImage(imageback, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true,
+                true, true, false);
+        BackgroundImage backgroundImage = new BackgroundImage(imageback, BackgroundRepeat.REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background background = new Background(backgroundImage);
 
         GridPane grid = new GridPane();
+        grid.setPadding(new Insets(92, 92, 92, 92));
+        grid.setBackground(background);
 
-        grid.setGridLinesVisible(true);
-        final int numCols = 8 ;
-        final int numRows = 8 ;
+        grid.setGridLinesVisible(false);
+        final int numCols = 8;
+        final int numRows = 8;
         for (int i = 0; i < numCols; i++) {
             ColumnConstraints colConst = new ColumnConstraints();
             colConst.setPercentWidth(100.0 / numCols);
+            colConst.setHalignment(HPos.CENTER);
             grid.getColumnConstraints().add(colConst);
         }
         for (int i = 0; i < numRows; i++) {
             RowConstraints rowConst = new RowConstraints();
             rowConst.setPercentHeight(100.0 / numRows);
+            rowConst.setValignment(VPos.CENTER);
             grid.getRowConstraints().add(rowConst);
         }
-
-        grid.setPadding(new Insets(92, 92, 92, 92));
-        grid.setBackground(background);
 
         grid.add(new ImageView(figure.getBlackFigure()), 1, 0);
         grid.add(new ImageView(figure.getBlackFigure()), 3, 0);
@@ -76,6 +81,5 @@ public class Checkers extends Application {
         primaryStage.setTitle("Checkers");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 }
