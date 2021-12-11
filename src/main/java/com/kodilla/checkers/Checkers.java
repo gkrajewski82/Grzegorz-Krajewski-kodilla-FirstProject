@@ -6,20 +6,19 @@ import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 public class Checkers extends Application {
-
-    private Image imageback = new Image("file:src/main/resources/table.jpg");
-    private Figure figure = new Figure();
-
 
     public static void main(String[] args) {
         launch(args);
     }
+
+    private Image imageback = new Image("file:src/main/resources/table.jpg");
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -34,7 +33,7 @@ public class Checkers extends Application {
         grid.setPadding(new Insets(92, 92, 92, 92));
         grid.setBackground(background);
 
-        grid.setGridLinesVisible(false);
+        grid.setGridLinesVisible(true);
         final int numCols = 8;
         final int numRows = 8;
         for (int i = 0; i < numCols; i++) {
@@ -50,31 +49,30 @@ public class Checkers extends Application {
             grid.getRowConstraints().add(rowConst);
         }
 
-        grid.add(new ImageView(figure.getBlackFigure()), 1, 0);
-        grid.add(new ImageView(figure.getBlackFigure()), 3, 0);
-        grid.add(new ImageView(figure.getBlackFigure()), 5, 0);
-        grid.add(new ImageView(figure.getBlackFigure()), 7, 0);
-        grid.add(new ImageView(figure.getBlackFigure()), 0, 1);
-        grid.add(new ImageView(figure.getBlackFigure()), 2, 1);
-        grid.add(new ImageView(figure.getBlackFigure()), 4, 1);
-        grid.add(new ImageView(figure.getBlackFigure()), 6, 1);
-        grid.add(new ImageView(figure.getBlackFigure()), 1, 2);
-        grid.add(new ImageView(figure.getBlackFigure()), 3, 2);
-        grid.add(new ImageView(figure.getBlackFigure()), 5, 2);
-        grid.add(new ImageView(figure.getBlackFigure()), 7, 2);
+        FieldExecutor fieldExecutor = new FieldExecutor();
+        Field fieldTable[][] = fieldExecutor.getFieldTable();
 
-        grid.add(new ImageView(figure.getWhiteFigure()), 0, 7);
-        grid.add(new ImageView(figure.getWhiteFigure()), 2, 7);
-        grid.add(new ImageView(figure.getWhiteFigure()), 4, 7);
-        grid.add(new ImageView(figure.getWhiteFigure()), 6, 7);
-        grid.add(new ImageView(figure.getWhiteFigure()), 1, 6);
-        grid.add(new ImageView(figure.getWhiteFigure()), 3, 6);
-        grid.add(new ImageView(figure.getWhiteFigure()), 5, 6);
-        grid.add(new ImageView(figure.getWhiteFigure()), 7, 6);
-        grid.add(new ImageView(figure.getWhiteFigure()), 0, 5);
-        grid.add(new ImageView(figure.getWhiteFigure()), 2, 5);
-        grid.add(new ImageView(figure.getWhiteFigure()), 4, 5);
-        grid.add(new ImageView(figure.getWhiteFigure()), 6, 5);
+        for (int x=0; x<8; x++) {
+            for (int y=0; y<8; y++) {
+                Field field = fieldTable[x][y];
+                fieldTable[x][y] = field;
+                grid.add(field, field.getX(), field.getY());
+            }
+        }
+
+        PawnExecutor pawnExecutor = new PawnExecutor();
+        List<Pawn> blackPawnList = pawnExecutor.getBlackPawnList();
+        List<Pawn> whitePawnList = pawnExecutor.getWhitePawnList();
+
+        for (int i=0; i<blackPawnList.size(); i++) {
+            Pawn blackPawn = blackPawnList.get(i);
+            grid.add(blackPawn, blackPawn.getX(), blackPawn.getY());
+        }
+
+        for (int i=0; i<whitePawnList.size(); i++) {
+            Pawn whitePawn = whitePawnList.get(i);
+            grid.add(whitePawn, whitePawn.getX(), whitePawn.getY());
+        }
 
         Scene scene = new Scene(grid, 800, 800, Color.BLACK);
 
