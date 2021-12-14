@@ -5,6 +5,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -18,7 +19,7 @@ public class Checkers extends Application {
         launch(args);
     }
 
-    private Image imageback = new Image("file:src/main/resources/table.jpg");
+    private Image imageback = new Image("file:src/main/resources/table.png");
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -30,11 +31,11 @@ public class Checkers extends Application {
         Background background = new Background(backgroundImage);
 
         GridPane grid = new GridPane();
-        grid.setPadding(new Insets(92, 92, 92, 92));
+        grid.setPadding(new Insets(92, 38, 92, 92));
         grid.setBackground(background);
 
-        grid.setGridLinesVisible(true);
-        final int numCols = 8;
+        grid.setGridLinesVisible(false);
+        final int numCols = 10;
         final int numRows = 8;
         for (int i = 0; i < numCols; i++) {
             ColumnConstraints colConst = new ColumnConstraints();
@@ -48,6 +49,7 @@ public class Checkers extends Application {
             rowConst.setValignment(VPos.CENTER);
             grid.getRowConstraints().add(rowConst);
         }
+
 
         FieldExecutor fieldExecutor = new FieldExecutor();
         Field fieldTable[][] = fieldExecutor.getFieldTable();
@@ -64,20 +66,26 @@ public class Checkers extends Application {
         List<Pawn> blackPawnList = pawnExecutor.getBlackPawnList();
         List<Pawn> whitePawnList = pawnExecutor.getWhitePawnList();
 
-        for (int i=0; i<blackPawnList.size(); i++) {
-            Pawn blackPawn = blackPawnList.get(i);
-            grid.add(blackPawn, blackPawn.getX(), blackPawn.getY());
-        }
+        Button startButton = new Button();
+        startButton.setText("new game");
+        grid.add(startButton, 9, 0);
 
-        for (int i=0; i<whitePawnList.size(); i++) {
-            Pawn whitePawn = whitePawnList.get(i);
-            grid.add(whitePawn, whitePawn.getX(), whitePawn.getY());
-        }
+        startButton.setOnAction((newGame) -> {
+            for (int i=0; i<blackPawnList.size(); i++) {
+                Pawn blackPawn = blackPawnList.get(i);
+                grid.add(blackPawn, blackPawn.getX(), blackPawn.getY());
+            }
+            for (int i=0; i<whitePawnList.size(); i++) {
+                Pawn whitePawn = whitePawnList.get(i);
+                grid.add(whitePawn, whitePawn.getX(), whitePawn.getY());
+            }
+        });
 
-        Scene scene = new Scene(grid, 800, 800, Color.BLACK);
+        Scene scene = new Scene(grid, 900, 800, Color.BLACK);
 
         primaryStage.setTitle("Checkers");
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 }

@@ -7,8 +7,10 @@ import java.util.List;
 
 public class PawnExecutor {
 
+    List<Pawn> blackPawnList = new ArrayList<>();
+    List<Pawn> whitePawnList = new ArrayList<>();
+
     public List<Pawn> getBlackPawnList() {
-        List<Pawn> blackPawnList = new ArrayList<>();
         for (int y = 0; y < 3; y++) {
             if (y != 1) {
                 for (int x = 1; x < 8; x = x + 2) {
@@ -31,7 +33,6 @@ public class PawnExecutor {
     }
 
     public List<Pawn> getWhitePawnList() {
-        List<Pawn> whitePawnList = new ArrayList<>();
         for (int y = 7; y > 4; y--) {
             if (y != 6) {
                 for (int x = 0; x < 8; x = x + 2) {
