@@ -52,12 +52,11 @@ public class Checkers extends Application {
 
 
         FieldExecutor fieldExecutor = new FieldExecutor();
-        Field fieldTable[][] = fieldExecutor.getFieldTable();
+        Field fieldTable[][] = fieldExecutor.generateFieldTable();
 
         for (int x=0; x<8; x++) {
             for (int y=0; y<8; y++) {
                 Field field = fieldTable[x][y];
-                fieldTable[x][y] = field;
                 grid.add(field, field.getX(), field.getY());
             }
         }

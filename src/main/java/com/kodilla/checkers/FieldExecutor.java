@@ -4,7 +4,7 @@ import javafx.geometry.Insets;
 
 public class FieldExecutor {
 
-    public Field[][] getFieldTable() {
+    public Field[][] generateFieldTable() {
 
         Field fieldTable[][] = new Field[8][8];
 
@@ -46,6 +46,23 @@ public class FieldExecutor {
                     fieldTable[x][y] = yellowField;
                 }
             }
-        } return fieldTable;
+        }
+
+        for (int i = 0; i < fieldTable.length; i++) {
+            for (int j = 0; j < fieldTable[i].length; j++) {
+                fieldTable[i][j].setOnAction((event) -> {
+                    Field clieckedField = ClickedField.getField();
+                    if (clieckedField == null) {
+                        System.out.println("Przycisk nie jest zaznaczony");
+                        ClickedField.setField((Field) event.getSource());
+                    } else {
+                        System.out.println("Ostatnio zaznaczony przycisk to " + clieckedField.getX() + " : " + clieckedField.getY());
+                        System.out.println("Wykonuje jakas akcje albo i nie");
+                        ClickedField.setField(null);
+                    }
+                });
+            }
+        }
+        return fieldTable;
     }
 }
