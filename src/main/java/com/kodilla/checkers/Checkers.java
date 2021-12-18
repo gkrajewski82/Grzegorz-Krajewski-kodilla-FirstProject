@@ -1,17 +1,19 @@
 package com.kodilla.checkers;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.List;
+import static javafx.scene.paint.Color.BLACK;
 
 public class Checkers extends Application {
 
@@ -50,9 +52,11 @@ public class Checkers extends Application {
             grid.getRowConstraints().add(rowConst);
         }
 
-
         FieldExecutor fieldExecutor = new FieldExecutor();
         Field fieldTable[][] = fieldExecutor.generateFieldTable();
+
+        Logic logic = new Logic();
+        logic.logicImplementation(fieldTable);
 
         for (int x=0; x<8; x++) {
             for (int y=0; y<8; y++) {
@@ -61,26 +65,23 @@ public class Checkers extends Application {
             }
         }
 
-        PawnExecutor pawnExecutor = new PawnExecutor();
-        List<Pawn> blackPawnList = pawnExecutor.getBlackPawnList();
-        List<Pawn> whitePawnList = pawnExecutor.getWhitePawnList();
-
         Button startButton = new Button();
         startButton.setText("new game");
+        startButton.setStyle("-fx-font: 12 arial; -fx-base: #b6e7c9;");
         grid.add(startButton, 9, 0);
 
         startButton.setOnAction((newGame) -> {
-            for (int i=0; i<blackPawnList.size(); i++) {
-                Pawn blackPawn = blackPawnList.get(i);
-                grid.add(blackPawn, blackPawn.getX(), blackPawn.getY());
+            for (int x=0; x<8; x++) {
+                for (int y=0; y<8; y++) {
+                    fieldTable[x][y].setGraphic(null);
+                }
             }
-            for (int i=0; i<whitePawnList.size(); i++) {
-                Pawn whitePawn = whitePawnList.get(i);
-                grid.add(whitePawn, whitePawn.getX(), whitePawn.getY());
-            }
+            PawnExecutor pawnExecutor = new PawnExecutor();
+            pawnExecutor.addBlackPawnToField(fieldTable);
+            pawnExecutor.addWhitePawnToField(fieldTable);
         });
 
-        Scene scene = new Scene(grid, 900, 800, Color.BLACK);
+        Scene scene = new Scene(grid, 900, 800, BLACK);
 
         primaryStage.setTitle("Checkers");
         primaryStage.setScene(scene);

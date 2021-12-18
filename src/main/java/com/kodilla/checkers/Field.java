@@ -4,18 +4,12 @@ import javafx.scene.control.Button;
 
 public class Field extends Button {
 
-    private FieldImage fieldImage;
     private int x;
     private int y;
 
-    public Field(FieldImage fieldImage, int x, int y) {
-        this.fieldImage = fieldImage;
+    public Field(int x, int y) {
         this.x = x;
         this.y = y;
-    }
-
-    public FieldImage getFieldImage() {
-        return fieldImage;
     }
 
     public int getX() {
@@ -24,5 +18,13 @@ public class Field extends Button {
 
     public int getY() {
         return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }
