@@ -4,12 +4,18 @@ import javafx.scene.control.Button;
 
 public class Field extends Button {
 
+    private Pawn pawn;
     private int x;
     private int y;
 
-    public Field(int x, int y) {
+    public Field(Pawn pawn, int x, int y) {
+        this.pawn = pawn;
         this.x = x;
         this.y = y;
+    }
+
+    public Pawn getPawn() {
+        return pawn;
     }
 
     public int getX() {
@@ -18,6 +24,10 @@ public class Field extends Button {
 
     public int getY() {
         return y;
+    }
+
+    public void setPawn(Pawn pawn) {
+        this.pawn = pawn;
     }
 
     public void setX(int x) {

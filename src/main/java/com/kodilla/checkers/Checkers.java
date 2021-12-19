@@ -1,15 +1,12 @@
 package com.kodilla.checkers;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -55,9 +52,6 @@ public class Checkers extends Application {
         FieldExecutor fieldExecutor = new FieldExecutor();
         Field fieldTable[][] = fieldExecutor.generateFieldTable();
 
-        Logic logic = new Logic();
-        logic.logicImplementation(fieldTable);
-
         for (int x=0; x<8; x++) {
             for (int y=0; y<8; y++) {
                 Field field = fieldTable[x][y];
@@ -65,15 +59,24 @@ public class Checkers extends Application {
             }
         }
 
+        Logic logic = new Logic();
+        logic.logicImplementation(fieldTable);
+
         Button startButton = new Button();
         startButton.setText("new game");
         startButton.setStyle("-fx-font: 12 arial; -fx-base: #b6e7c9;");
         grid.add(startButton, 9, 0);
 
-        startButton.setOnAction((newGame) -> {
+        Button changeTurnButton = new Button();
+        changeTurnButton.setText("your turn");
+        changeTurnButton.setStyle("-fx-font: 12 arial; -fx-base: #b6e7c9;");
+        grid.add(changeTurnButton, 9, 1);
+
+        startButton.setOnAction(newGame -> {
             for (int x=0; x<8; x++) {
                 for (int y=0; y<8; y++) {
-                    fieldTable[x][y].setGraphic(null);
+                    fieldTable[x][y].setPawn(null);
+                    fieldTable[x][y].setGraphic(fieldTable[x][y].getPawn());
                 }
             }
             PawnExecutor pawnExecutor = new PawnExecutor();
@@ -81,11 +84,15 @@ public class Checkers extends Application {
             pawnExecutor.addWhitePawnToField(fieldTable);
         });
 
+        changeTurnButton.setOnAction(turnChange -> {
+
+
+        });
+
         Scene scene = new Scene(grid, 900, 800, BLACK);
 
         primaryStage.setTitle("Checkers");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 }
