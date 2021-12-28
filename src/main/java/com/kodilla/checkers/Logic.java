@@ -1,8 +1,5 @@
 package com.kodilla.checkers;
 
-import static javafx.scene.paint.Color.BLACK;
-import static javafx.scene.paint.Color.WHITE;
-
 public class Logic {
 
     public Field[][] logicImplementation(Field fieldTable[][]) {
@@ -23,41 +20,101 @@ public class Logic {
             }
         }*/
 
-        for (int x=0; x<8; x++) {
-            for (int y=0; y<8; y++) {
+        /*for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
                 fieldTable[x][y].setOnAction(event -> {
                     Field actualField = (Field) event.getSource();
-                    if (actualField.getPawn().getFill() == BLACK) {
+                    Pawn actualPawn = actualField.getPawn();
+                    if (actualPawn == null) { //PUSTE POLE
+                        System.out.println("na polu brak pionka");
+                    } else if (actualPawn.getFill() == BLACK) { //CZARNY PIONEK
                         System.out.println("na polu jest pionek");
-                        Pawn pawn = actualField.getPawn();
+                        Pawn pawn = actualPawn;
                         System.out.println("pionek został pobrany");
-                        for (int i=0; i<8; i++) {
-                            for (int j=0; j<8; j++) {
+                        for (int i = 0; i < 8; i++) {
+                            for (int j = 0; j < 8; j++) {
                                 fieldTable[i][j].setOnAction(event2 -> {
                                     Field actualField2 = (Field) event2.getSource();
                                     int oldX = actualField.getX();
                                     int oldY = actualField.getY();
                                     int newX = actualField2.getX();
                                     int newY = actualField2.getY();
-                                    if (actualField2.getPawn() == null && newY == oldY + 1 && (newX == oldX - 1 || newX == oldX + 1)) {
-                                        System.out.println("wstawiam pionek");
-                                        actualField.setPawn(null); //czy to pole jest niepotrzebne?
-                                        actualField.setGraphic(actualField.getPawn()); //czy to pole jest niepotrzebne?
+                                    if (actualField2.getPawn() == null && newY == oldY + 1 && (newX == oldX - 1 ||
+                                            newX == oldX + 1)) {
+                                        System.out.println("stawiam pionek");
+                                        actualField.setPawn(null);
+                                        //actualField.setGraphic(actualPawn);
                                         actualField2.setPawn(pawn);
-                                        actualField2.setGraphic(actualField2.getPawn());
+                                        //actualField2.setGraphic(actualField2.getPawn());
                                     } else {
                                         System.out.println("niewłaściwy ruch");
                                     }
                                 });
                             }
                         }
+                    } else { //BIALY PIONEK
+                        System.out.println("na polu jest pionek");
+                        Pawn pawn = actualPawn;
+                        System.out.println("pionek został pobrany");
+                        for (int i = 0; i < 8; i++) {
+                            for (int j = 0; j < 8; j++) {
+                                fieldTable[i][j].setOnAction(event2 -> {
+                                    Field actualField2 = (Field) event2.getSource();
+                                    int oldX = actualField.getX();
+                                    int oldY = actualField.getY();
+                                    int newX = actualField2.getX();
+                                    int newY = actualField2.getY();
+                                    if (actualField2.getPawn() == null && newY == oldY - 1 && (newX == oldX - 1 ||
+                                            newX == oldX + 1)) {
+                                        System.out.println("stawiam pionek");
+                                        actualField.setPawn(null);
+                                        //actualField.setGraphic(actualPawn);
+                                        actualField2.setPawn(pawn);
+                                        //actualField2.setGraphic(actualField2.getPawn());
+                                    } else {
+                                        System.out.println("niewłaściwy ruch");
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+        }*/
+
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                fieldTable[x][y].setOnAction(event -> {
+                    Field clickedField = (Field) event.getSource();
+
+                    boolean isPawnSelected = GameState.actualPawn != null;
+                    if (isPawnSelected) {
+                        movePawn(clickedField, fieldTable);
                     } else {
-                        System.out.println("na polu brak pionka");
+                        if (clickedField.getPawn() == null) {
+                            System.out.println("Wybierz pole z pionkiem!");
+                        }
+                        selectPawn(clickedField);
                     }
                 });
             }
         }
-
         return fieldTable;
+    }
+
+    private void movePawn(Field destinationField, Field fieldTable[][]) {
+        int destinationFieldX = destinationField.getX();
+        int destinationFieldY = destinationField.getY();
+
+        //Czy ja moge ruszyc tym pionkiem
+
+        Pawn pawnToMove = GameState.actualPawn.getPawn();
+        destinationField.setPawn(pawnToMove);
+        GameState.actualPawn.setPawn(null);
+        GameState.actualPawn = null;
+    }
+
+    private void selectPawn(Field fieldToSelect) {
+        GameState.actualPawn = fieldToSelect;
     }
 }

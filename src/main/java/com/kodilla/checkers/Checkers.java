@@ -33,7 +33,7 @@ public class Checkers extends Application {
         grid.setPadding(new Insets(92, 38, 92, 92));
         grid.setBackground(background);
 
-        grid.setGridLinesVisible(false);
+        grid.setGridLinesVisible(true);
         final int numCols = 10;
         final int numRows = 8;
         for (int i = 0; i < numCols; i++) {
@@ -52,29 +52,21 @@ public class Checkers extends Application {
         FieldExecutor fieldExecutor = new FieldExecutor();
         Field fieldTable[][] = fieldExecutor.generateFieldTable();
 
-        for (int x=0; x<8; x++) {
-            for (int y=0; y<8; y++) {
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
                 Field field = fieldTable[x][y];
                 grid.add(field, field.getX(), field.getY());
             }
         }
 
-        Logic logic = new Logic();
-        logic.logicImplementation(fieldTable);
-
         Button startButton = new Button();
-        startButton.setText("new game");
-        startButton.setStyle("-fx-font: 12 arial; -fx-base: #b6e7c9;");
+        startButton.setText("new\ngame");
+        startButton.setStyle("-fx-font: 12 arial; -fx-base: #8d3a3a");
         grid.add(startButton, 9, 0);
 
-        Button changeTurnButton = new Button();
-        changeTurnButton.setText("your turn");
-        changeTurnButton.setStyle("-fx-font: 12 arial; -fx-base: #b6e7c9;");
-        grid.add(changeTurnButton, 9, 1);
-
         startButton.setOnAction(newGame -> {
-            for (int x=0; x<8; x++) {
-                for (int y=0; y<8; y++) {
+            for (int x = 0; x < 8; x++) {
+                for (int y = 0; y < 8; y++) {
                     fieldTable[x][y].setPawn(null);
                     fieldTable[x][y].setGraphic(fieldTable[x][y].getPawn());
                 }
@@ -84,10 +76,8 @@ public class Checkers extends Application {
             pawnExecutor.addWhitePawnToField(fieldTable);
         });
 
-        changeTurnButton.setOnAction(turnChange -> {
-
-
-        });
+        Logic logic = new Logic();
+        logic.logicImplementation(fieldTable);
 
         Scene scene = new Scene(grid, 900, 800, BLACK);
 

@@ -14,12 +14,12 @@ public class FieldExecutor {
         for (int x = 0; x < fieldTable.length; x++) {
             for (int y = 0; y < fieldTable[x].length; y++) {
                 Field field = new Field(null, x, y);
-                field.setPrefSize(73, 73);
+                field.setPrefSize(77, 77);
                 field.setStyle("-fx-background-color: transparent");
-                field.setPadding(new Insets(2, 2, 2, 2));
+                //field.setPadding(new Insets(2, 2, 2, 2));
                 fieldTable[x][y] = field;
 
-                field.addEventHandler(MouseEvent.MOUSE_ENTERED,
+                /*field.addEventHandler(MouseEvent.MOUSE_ENTERED,
                         new EventHandler<MouseEvent>() {
                             @Override
                             public void handle(MouseEvent e) {
@@ -33,7 +33,7 @@ public class FieldExecutor {
                             public void handle(MouseEvent e) {
                                 field.setEffect(null);
                             }
-                        });
+                        });*/
             }
         }
         return fieldTable;

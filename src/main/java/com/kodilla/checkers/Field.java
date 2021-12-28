@@ -28,6 +28,7 @@ public class Field extends Button {
 
     public void setPawn(Pawn pawn) {
         this.pawn = pawn;
+        this.setGraphic(pawn);
     }
 
     public void setX(int x) {
