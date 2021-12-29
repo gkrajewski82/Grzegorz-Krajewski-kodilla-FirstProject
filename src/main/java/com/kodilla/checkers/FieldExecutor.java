@@ -19,7 +19,7 @@ public class FieldExecutor {
                 //field.setPadding(new Insets(2, 2, 2, 2));
                 fieldTable[x][y] = field;
 
-                /*field.addEventHandler(MouseEvent.MOUSE_ENTERED,
+                /*field.addEventHandler(MouseEvent.MOUSE_CLICKED,
                         new EventHandler<MouseEvent>() {
                             @Override
                             public void handle(MouseEvent e) {
@@ -27,7 +27,7 @@ public class FieldExecutor {
                             }
                         });
 
-                field.addEventHandler(MouseEvent.MOUSE_EXITED,
+                field.addEventHandler(MouseEvent.MOUSE_RELEASED,
                         new EventHandler<MouseEvent>() {
                             @Override
                             public void handle(MouseEvent e) {

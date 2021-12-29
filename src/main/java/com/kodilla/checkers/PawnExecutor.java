@@ -5,7 +5,6 @@ import static javafx.scene.paint.Color.WHITE;
 
 public class PawnExecutor {
 
-
     public void addBlackPawnToField(Field fieldTable[][]) {
         for (int y = 0; y < 3; y++) {
             if (y != 1) {
