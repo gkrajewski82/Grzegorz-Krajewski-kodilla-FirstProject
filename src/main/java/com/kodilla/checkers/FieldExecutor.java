@@ -1,10 +1,12 @@
 package com.kodilla.checkers;
 
+import javafx.animation.PauseTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 public class FieldExecutor {
 
@@ -18,22 +20,6 @@ public class FieldExecutor {
                 field.setStyle("-fx-background-color: transparent");
                 //field.setPadding(new Insets(2, 2, 2, 2));
                 fieldTable[x][y] = field;
-
-                /*field.addEventHandler(MouseEvent.MOUSE_CLICKED,
-                        new EventHandler<MouseEvent>() {
-                            @Override
-                            public void handle(MouseEvent e) {
-                                field.setEffect(new DropShadow(33, Color.YELLOW));
-                            }
-                        });
-
-                field.addEventHandler(MouseEvent.MOUSE_RELEASED,
-                        new EventHandler<MouseEvent>() {
-                            @Override
-                            public void handle(MouseEvent e) {
-                                field.setEffect(null);
-                            }
-                        });*/
             }
         }
         return fieldTable;

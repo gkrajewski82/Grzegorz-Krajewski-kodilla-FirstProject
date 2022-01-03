@@ -76,7 +76,7 @@ public class Checkers extends Application {
             pawnExecutor.addWhitePawnToField(fieldTable);
         });
 
-        Logic logic = new Logic();
+        PawnLogic logic = new PawnLogic();
         logic.logicImplementation(fieldTable);
 
         Scene scene = new Scene(grid, 900, 800, BLACK);
