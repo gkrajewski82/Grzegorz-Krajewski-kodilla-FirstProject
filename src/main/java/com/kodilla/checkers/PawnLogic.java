@@ -2,9 +2,7 @@ package com.kodilla.checkers;
 
 import javafx.event.EventHandler;
 import javafx.scene.effect.BoxBlur;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 import static javafx.scene.paint.Color.BLACK;

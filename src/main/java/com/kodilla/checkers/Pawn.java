@@ -8,6 +8,4 @@ public class Pawn extends Circle {
     public Pawn(double radius, Paint fill) {
         super(radius, fill);
     }
-
-
 }

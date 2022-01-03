@@ -4,3 +4,4 @@ public class GameState {
 
     public static Field actualField = null;
 }
+
