@@ -77,13 +77,11 @@ public class PawnLogic {
             if (pawnToMove.getFill() == BLACK && fieldTable[oldX + 1][oldY + 1].getPawn().getFill() == WHITE) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX + 1][oldY + 1].setPawn(null);
-                fieldTable[oldX + 1][oldY + 1] = null;
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
             } else if (pawnToMove.getFill() == WHITE && fieldTable[oldX + 1][oldY + 1].getPawn().getFill() == BLACK) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX + 1][oldY + 1].setPawn(null);
-                fieldTable[oldX + 1][oldY + 1] = null;
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
             }
@@ -91,13 +89,11 @@ public class PawnLogic {
             if (pawnToMove.getFill() == BLACK && fieldTable[oldX + 1][oldY - 1].getPawn().getFill() == WHITE) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX + 1][oldY - 1].setPawn(null);
-                fieldTable[oldX + 1][oldY - 1] = null;
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
             } else if (pawnToMove.getFill() == WHITE && fieldTable[oldX + 1][oldY - 1].getPawn().getFill() == BLACK) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX + 1][oldY - 1].setPawn(null);
-                fieldTable[oldX + 1][oldY - 1] = null;
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
             }
@@ -116,13 +112,11 @@ public class PawnLogic {
             if (pawnToMove.getFill() == BLACK && fieldTable[oldX - 1][oldY + 1].getPawn().getFill() == WHITE) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX - 1][oldY + 1].setPawn(null);
-                fieldTable[oldX - 1][oldY + 1] = null;
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
             } else if (pawnToMove.getFill() == WHITE && fieldTable[oldX - 1][oldY + 1].getPawn().getFill() == BLACK) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX - 1][oldY + 1].setPawn(null);
-                fieldTable[oldX - 1][oldY + 1] = null;
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
             }
@@ -130,13 +124,11 @@ public class PawnLogic {
             if (pawnToMove.getFill() == BLACK && fieldTable[oldX - 1][oldY - 1].getPawn().getFill() == WHITE) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX - 1][oldY - 1].setPawn(null);
-                fieldTable[oldX - 1][oldY - 1] = null;
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
             } else if (pawnToMove.getFill() == WHITE && fieldTable[oldX - 1][oldY - 1].getPawn().getFill() == BLACK ) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX - 1][oldY - 1].setPawn(null);
-                fieldTable[oldX - 1][oldY - 1] = null;
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
             }

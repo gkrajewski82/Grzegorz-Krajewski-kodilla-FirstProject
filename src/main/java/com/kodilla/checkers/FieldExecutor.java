@@ -1,13 +1,5 @@
 package com.kodilla.checkers;
 
-import javafx.animation.PauseTransition;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.util.Duration;
-
 public class FieldExecutor {
 
     Field fieldTable[][] = new Field[8][8];
