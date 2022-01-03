@@ -1,14 +1,18 @@
 package com.kodilla.checkers;
 
 import javafx.event.EventHandler;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 import static javafx.scene.paint.Color.BLACK;
 import static javafx.scene.paint.Color.WHITE;
 
 public class PawnLogic {
+
+    private PawnLogic pawnLogic;
 
     public Field[][] logicImplementation(Field fieldTable[][]) {
 
@@ -19,23 +23,29 @@ public class PawnLogic {
                     Pawn pawnOnField = clickedField.getPawn();
 
                     boolean isFieldSelected = GameState.actualField != null;
-                    if (isFieldSelected && pawnOnField == null && clickedField.getX() == GameState.actualField.getX() + 2) {
-                        System.out.println("Biję pionka w prawo!");
-                        beatPlusTwoX(clickedField, fieldTable);
-                        unmarkPawn(clickedField);
-                    } else if (isFieldSelected && pawnOnField == null && clickedField.getX() == GameState.actualField.getX() - 2) {
-                        System.out.println("Biję pionka w lewo!");
-                        beatMinusTwoX(clickedField, fieldTable);
-                        unmarkPawn(clickedField);
-                    } else if (isFieldSelected && pawnOnField == null) {
-                        System.out.println("Przenoszę");
-                        movePawn(clickedField);
-                        unmarkPawn(clickedField);
-                    } else {
-                        if (clickedField.getPawn() == null) {
-                            System.out.println("Wybierz pole z pionkiem!");
+                    if (isFieldSelected) {
+                        if (pawnOnField == null && clickedField.getX() == GameState.actualField.getX() + 2) {
+                            System.out.println("Biję!");
+                            beatPlusTwoX(clickedField, fieldTable);
+                            //unmarkPawn(clickedField.getPawn());
+                        } else if (pawnOnField == null && clickedField.getX() == GameState.actualField.getX() - 2) {
+                            System.out.println("Biję!");
+                            beatMinusTwoX(clickedField, fieldTable);
+                            //unmarkPawn(clickedField.getPawn());
+                        } else if (pawnOnField == null) {
+                            System.out.println("Przenoszę!");
+                            movePawn(clickedField);
+                            //unmarkPawn(clickedField.getPawn());
+                        } else if (pawnOnField != null) {
+                            System.out.println("ruch niedozwolony - na polu jest pionek!");
+                        } else if (clickedField.equals(GameState.actualField)) {
+                            System.out.println("dupa");
                         }
-                        markPawn(clickedField);
+                    } else if (clickedField.getPawn() == null) {
+                        System.out.println("Wybierz pole z pionkiem!");
+                    }
+                    else {
+                        markPawn(clickedField.getPawn());
                         selectPawn(clickedField);
                         System.out.println("Pole zostało zaznaczone!");
                     }
@@ -51,13 +61,14 @@ public class PawnLogic {
         int destinationFieldX = destinationField.getX();
         int destinationFieldY = destinationField.getY();
         Pawn pawnToMove = GameState.actualField.getPawn();
+        Paint pawnColour = pawnToMove.getFill();
 
-        if (pawnToMove.getFill() == BLACK && (destinationFieldY == oldY + 1 &&
+        if (pawnColour == BLACK && (destinationFieldY == oldY + 1 &&
                 (destinationFieldX == oldX + 1 || destinationFieldX == oldX - 1))) {
             destinationField.setPawn(pawnToMove);
             GameState.actualField.setPawn(null);
             GameState.actualField = null;
-        } else if (pawnToMove.getFill() == WHITE && (destinationFieldY == oldY - 1 &&
+        } else if (pawnColour == WHITE && (destinationFieldY == oldY - 1 &&
                 (destinationFieldX == oldX + 1 || destinationFieldX == oldX - 1))) {
             destinationField.setPawn(pawnToMove);
             GameState.actualField.setPawn(null);
@@ -72,26 +83,27 @@ public class PawnLogic {
         int oldY = GameState.actualField.getY();
         int destinationFieldY = destinationField.getY();
         Pawn pawnToMove = GameState.actualField.getPawn();
+        Paint pawnColour = pawnToMove.getFill();
 
         if (destinationFieldY == oldY + 2) {
-            if (pawnToMove.getFill() == BLACK && fieldTable[oldX + 1][oldY + 1].getPawn().getFill() == WHITE) {
+            if (pawnColour == BLACK && fieldTable[oldX + 1][oldY + 1].getPawn().getFill() == WHITE) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX + 1][oldY + 1].setPawn(null);
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
-            } else if (pawnToMove.getFill() == WHITE && fieldTable[oldX + 1][oldY + 1].getPawn().getFill() == BLACK) {
+            } else if (pawnColour == WHITE && fieldTable[oldX + 1][oldY + 1].getPawn().getFill() == BLACK) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX + 1][oldY + 1].setPawn(null);
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
             }
         } else if ( destinationFieldY == oldY - 2) {
-            if (pawnToMove.getFill() == BLACK && fieldTable[oldX + 1][oldY - 1].getPawn().getFill() == WHITE) {
+            if (pawnColour == BLACK && fieldTable[oldX + 1][oldY - 1].getPawn().getFill() == WHITE) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX + 1][oldY - 1].setPawn(null);
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
-            } else if (pawnToMove.getFill() == WHITE && fieldTable[oldX + 1][oldY - 1].getPawn().getFill() == BLACK) {
+            } else if (pawnColour == WHITE && fieldTable[oldX + 1][oldY - 1].getPawn().getFill() == BLACK) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX + 1][oldY - 1].setPawn(null);
                 GameState.actualField.setPawn(null);
@@ -107,26 +119,27 @@ public class PawnLogic {
         int oldY = GameState.actualField.getY();
         int destinationFieldY = destinationField.getY();
         Pawn pawnToMove = GameState.actualField.getPawn();
+        Paint pawnColour = pawnToMove.getFill();
 
         if (destinationFieldY == oldY + 2) {
-            if (pawnToMove.getFill() == BLACK && fieldTable[oldX - 1][oldY + 1].getPawn().getFill() == WHITE) {
+            if (pawnColour == BLACK && fieldTable[oldX - 1][oldY + 1].getPawn().getFill() == WHITE) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX - 1][oldY + 1].setPawn(null);
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
-            } else if (pawnToMove.getFill() == WHITE && fieldTable[oldX - 1][oldY + 1].getPawn().getFill() == BLACK) {
+            } else if (pawnColour == WHITE && fieldTable[oldX - 1][oldY + 1].getPawn().getFill() == BLACK) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX - 1][oldY + 1].setPawn(null);
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
             }
         } else if (destinationFieldY == oldY - 2) {
-            if (pawnToMove.getFill() == BLACK && fieldTable[oldX - 1][oldY - 1].getPawn().getFill() == WHITE) {
+            if (pawnColour == BLACK && fieldTable[oldX - 1][oldY - 1].getPawn().getFill() == WHITE) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX - 1][oldY - 1].setPawn(null);
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
-            } else if (pawnToMove.getFill() == WHITE && fieldTable[oldX - 1][oldY - 1].getPawn().getFill() == BLACK ) {
+            } else if (pawnColour == WHITE && fieldTable[oldX - 1][oldY - 1].getPawn().getFill() == BLACK ) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX - 1][oldY - 1].setPawn(null);
                 GameState.actualField.setPawn(null);
@@ -141,20 +154,20 @@ public class PawnLogic {
         GameState.actualField = fieldToSelect;
     }
 
-    private void markPawn(Field clickedField) {
-        clickedField.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    public static void markPawn(Pawn markedPawn) {
+        markedPawn.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                clickedField.setEffect(new DropShadow(33, Color.YELLOW));
+                markedPawn.setEffect(new BoxBlur(10, 10, 50));
             }
         });
     }
 
-    private void unmarkPawn(Field clickedField) {
-        clickedField.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    public static void unmarkPawn(Pawn unmarkedPawn) {
+        unmarkedPawn.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                clickedField.setEffect(null);
+                unmarkedPawn.setEffect(null);
             }
         });
     }
