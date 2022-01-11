@@ -2,7 +2,7 @@ package com.kodilla.checkers;
 
 public class FieldExecutor {
 
-    Field fieldTable[][] = new Field[8][8];
+    Field[][] fieldTable = new Field[8][8];
 
     public Field[][] generateFieldTable() {
         for (int x = 0; x < fieldTable.length; x++) {

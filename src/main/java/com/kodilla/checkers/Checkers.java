@@ -18,7 +18,7 @@ public class Checkers extends Application {
         launch(args);
     }
 
-    private Image imageback = new Image("file:src/main/resources/table.png");
+    private final Image imageback = new Image("file:src/main/resources/table.png");
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -50,7 +50,7 @@ public class Checkers extends Application {
         }
 
         FieldExecutor fieldExecutor = new FieldExecutor();
-        Field fieldTable[][] = fieldExecutor.generateFieldTable();
+        Field[][] fieldTable = fieldExecutor.generateFieldTable();
 
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {

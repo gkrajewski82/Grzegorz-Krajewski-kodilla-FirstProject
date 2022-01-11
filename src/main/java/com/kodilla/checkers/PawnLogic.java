@@ -1,8 +1,6 @@
 package com.kodilla.checkers;
 
-import javafx.event.EventHandler;
 import javafx.scene.effect.BoxBlur;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Paint;
 
 import static javafx.scene.paint.Color.BLACK;
@@ -10,9 +8,7 @@ import static javafx.scene.paint.Color.WHITE;
 
 public class PawnLogic {
 
-    private PawnLogic pawnLogic;
-
-    public Field[][] logicImplementation(Field fieldTable[][]) {
+    public void logicImplementation(Field[][] fieldTable) {
 
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
@@ -21,28 +17,30 @@ public class PawnLogic {
                     Pawn pawnOnField = clickedField.getPawn();
 
                     boolean isFieldSelected = GameState.actualField != null;
+                    boolean isPawnOnField = pawnOnField != null;
                     if (isFieldSelected) {
-                        if (pawnOnField == null && clickedField.getX() == GameState.actualField.getX() + 2) {
+                        if (!isPawnOnField && clickedField.getX() == GameState.actualField.getX() + 2) {
                             System.out.println("Biję!");
-                            beatPlusTwoX(clickedField, fieldTable);
-                            //unmarkPawn(clickedField.getPawn());
-                        } else if (pawnOnField == null && clickedField.getX() == GameState.actualField.getX() - 2) {
+                            beatDiagonalToTheRight(clickedField, fieldTable);
+                            unmarkPawn(clickedField.getPawn());
+                        } else if (!isPawnOnField && clickedField.getX() == GameState.actualField.getX() - 2) {
                             System.out.println("Biję!");
-                            beatMinusTwoX(clickedField, fieldTable);
-                            //unmarkPawn(clickedField.getPawn());
-                        } else if (pawnOnField == null) {
+                            beatDiagonalToTheLeft(clickedField, fieldTable);
+                            unmarkPawn(clickedField.getPawn());
+                        } else if (!isPawnOnField) {
                             System.out.println("Przenoszę!");
                             movePawn(clickedField);
-                            //unmarkPawn(clickedField.getPawn());
-                        } else if (pawnOnField != null) {
+                            unmarkPawn(clickedField.getPawn());
+                        } else if (clickedField.getX() == GameState.actualField.getX() &&
+                                clickedField.getY() == GameState.actualField.getY()) {
+                            unmarkPawn(clickedField.getPawn());
+                            GameState.actualField = null;
+                        } else {
                             System.out.println("ruch niedozwolony - na polu jest pionek!");
-                        } else if (clickedField.equals(GameState.actualField)) {
-                            System.out.println("dupa");
                         }
                     } else if (clickedField.getPawn() == null) {
                         System.out.println("Wybierz pole z pionkiem!");
-                    }
-                    else {
+                    } else {
                         markPawn(clickedField.getPawn());
                         selectPawn(clickedField);
                         System.out.println("Pole zostało zaznaczone!");
@@ -50,7 +48,6 @@ public class PawnLogic {
                 });
             }
         }
-        return fieldTable;
     }
 
     private void movePawn(Field destinationField) {
@@ -76,7 +73,7 @@ public class PawnLogic {
         }
     }
 
-    private void beatPlusTwoX(Field destinationField, Field fieldTable[][]) {
+    private void beatDiagonalToTheRight(Field destinationField, Field[][] fieldTable) {
         int oldX = GameState.actualField.getX();
         int oldY = GameState.actualField.getY();
         int destinationFieldY = destinationField.getY();
@@ -95,7 +92,7 @@ public class PawnLogic {
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
             }
-        } else if ( destinationFieldY == oldY - 2) {
+        } else if (destinationFieldY == oldY - 2) {
             if (pawnColour == BLACK && fieldTable[oldX + 1][oldY - 1].getPawn().getFill() == WHITE) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX + 1][oldY - 1].setPawn(null);
@@ -112,7 +109,7 @@ public class PawnLogic {
         }
     }
 
-    private void beatMinusTwoX(Field destinationField, Field fieldTable[][]) {
+    private void beatDiagonalToTheLeft(Field destinationField, Field[][] fieldTable) {
         int oldX = GameState.actualField.getX();
         int oldY = GameState.actualField.getY();
         int destinationFieldY = destinationField.getY();
@@ -137,7 +134,7 @@ public class PawnLogic {
                 fieldTable[oldX - 1][oldY - 1].setPawn(null);
                 GameState.actualField.setPawn(null);
                 GameState.actualField = null;
-            } else if (pawnColour == WHITE && fieldTable[oldX - 1][oldY - 1].getPawn().getFill() == BLACK ) {
+            } else if (pawnColour == WHITE && fieldTable[oldX - 1][oldY - 1].getPawn().getFill() == BLACK) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX - 1][oldY - 1].setPawn(null);
                 GameState.actualField.setPawn(null);
@@ -152,21 +149,11 @@ public class PawnLogic {
         GameState.actualField = fieldToSelect;
     }
 
-    public static void markPawn(Pawn markedPawn) {
-        markedPawn.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                markedPawn.setEffect(new BoxBlur(10, 10, 50));
-            }
-        });
+    public static void markPawn(Pawn pawnToMark) {
+        pawnToMark.setOnMouseClicked(e -> pawnToMark.setEffect(new BoxBlur(10, 10, 50)));
     }
 
-    public static void unmarkPawn(Pawn unmarkedPawn) {
-        unmarkedPawn.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                unmarkedPawn.setEffect(null);
-            }
-        });
+    public static void unmarkPawn(Pawn pawnToUnmark) {
+        pawnToUnmark.setOnMouseClicked(e -> pawnToUnmark.setEffect(null));
     }
 }
