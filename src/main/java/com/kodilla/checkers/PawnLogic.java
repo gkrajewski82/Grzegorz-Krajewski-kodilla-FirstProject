@@ -1,7 +1,6 @@
 package com.kodilla.checkers;
 
 import javafx.scene.effect.BoxBlur;
-import javafx.scene.paint.Paint;
 
 import static javafx.scene.paint.Color.BLACK;
 import static javafx.scene.paint.Color.WHITE;
@@ -15,9 +14,9 @@ public class PawnLogic {
                 fieldTable[x][y].setOnAction(event -> {
                     Field clickedField = (Field) event.getSource();
                     Pawn pawnOnField = clickedField.getPawn();
-
                     boolean isFieldSelected = GameState.actualField != null;
                     boolean isPawnOnField = pawnOnField != null;
+
                     if (isFieldSelected) {
                         if (!isPawnOnField && clickedField.getX() == GameState.actualField.getX() + 2) {
                             System.out.println("Biję!");
@@ -56,18 +55,17 @@ public class PawnLogic {
         int destinationFieldX = destinationField.getX();
         int destinationFieldY = destinationField.getY();
         Pawn pawnToMove = GameState.actualField.getPawn();
-        Paint pawnColour = pawnToMove.getFill();
+        boolean blackPawn = pawnToMove.getFill() == BLACK;
 
-        if (pawnColour == BLACK && (destinationFieldY == oldY + 1 &&
-                (destinationFieldX == oldX + 1 || destinationFieldX == oldX - 1))) {
+
+        if (blackPawn && (destinationFieldY == oldY + 1 && (destinationFieldX == oldX + 1 ||
+                destinationFieldX == oldX - 1))) {
             destinationField.setPawn(pawnToMove);
-            GameState.actualField.setPawn(null);
-            GameState.actualField = null;
-        } else if (pawnColour == WHITE && (destinationFieldY == oldY - 1 &&
-                (destinationFieldX == oldX + 1 || destinationFieldX == oldX - 1))) {
+            setPawnNull();
+        } else if (!blackPawn && (destinationFieldY == oldY - 1 && (destinationFieldX == oldX + 1 ||
+                destinationFieldX == oldX - 1))) {
             destinationField.setPawn(pawnToMove);
-            GameState.actualField.setPawn(null);
-            GameState.actualField = null;
+            setPawnNull();
         } else {
             System.out.println("ruch niedozwolony!");
         }
@@ -78,31 +76,27 @@ public class PawnLogic {
         int oldY = GameState.actualField.getY();
         int destinationFieldY = destinationField.getY();
         Pawn pawnToMove = GameState.actualField.getPawn();
-        Paint pawnColour = pawnToMove.getFill();
+        boolean blackPawn = pawnToMove.getFill() == BLACK;
 
         if (destinationFieldY == oldY + 2) {
-            if (pawnColour == BLACK && fieldTable[oldX + 1][oldY + 1].getPawn().getFill() == WHITE) {
+            if (blackPawn && fieldTable[oldX + 1][oldY + 1].getPawn().getFill() == WHITE) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX + 1][oldY + 1].setPawn(null);
-                GameState.actualField.setPawn(null);
-                GameState.actualField = null;
-            } else if (pawnColour == WHITE && fieldTable[oldX + 1][oldY + 1].getPawn().getFill() == BLACK) {
+                setPawnNull();
+            } else if (!blackPawn && fieldTable[oldX + 1][oldY + 1].getPawn().getFill() == BLACK) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX + 1][oldY + 1].setPawn(null);
-                GameState.actualField.setPawn(null);
-                GameState.actualField = null;
+                setPawnNull();
             }
         } else if (destinationFieldY == oldY - 2) {
-            if (pawnColour == BLACK && fieldTable[oldX + 1][oldY - 1].getPawn().getFill() == WHITE) {
+            if (blackPawn && fieldTable[oldX + 1][oldY - 1].getPawn().getFill() == WHITE) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX + 1][oldY - 1].setPawn(null);
-                GameState.actualField.setPawn(null);
-                GameState.actualField = null;
-            } else if (pawnColour == WHITE && fieldTable[oldX + 1][oldY - 1].getPawn().getFill() == BLACK) {
+                setPawnNull();
+            } else if (!blackPawn && fieldTable[oldX + 1][oldY - 1].getPawn().getFill() == BLACK) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX + 1][oldY - 1].setPawn(null);
-                GameState.actualField.setPawn(null);
-                GameState.actualField = null;
+                setPawnNull();
             }
         } else {
             System.out.println("próba bicia - ruch niedozwolony!");
@@ -114,35 +108,36 @@ public class PawnLogic {
         int oldY = GameState.actualField.getY();
         int destinationFieldY = destinationField.getY();
         Pawn pawnToMove = GameState.actualField.getPawn();
-        Paint pawnColour = pawnToMove.getFill();
+        boolean blackPawn = pawnToMove.getFill() == BLACK;
 
         if (destinationFieldY == oldY + 2) {
-            if (pawnColour == BLACK && fieldTable[oldX - 1][oldY + 1].getPawn().getFill() == WHITE) {
+            if (blackPawn && fieldTable[oldX - 1][oldY + 1].getPawn().getFill() == WHITE) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX - 1][oldY + 1].setPawn(null);
-                GameState.actualField.setPawn(null);
-                GameState.actualField = null;
-            } else if (pawnColour == WHITE && fieldTable[oldX - 1][oldY + 1].getPawn().getFill() == BLACK) {
+                setPawnNull();
+            } else if (!blackPawn && fieldTable[oldX - 1][oldY + 1].getPawn().getFill() == BLACK) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX - 1][oldY + 1].setPawn(null);
-                GameState.actualField.setPawn(null);
-                GameState.actualField = null;
+                setPawnNull();
             }
         } else if (destinationFieldY == oldY - 2) {
-            if (pawnColour == BLACK && fieldTable[oldX - 1][oldY - 1].getPawn().getFill() == WHITE) {
+            if (blackPawn && fieldTable[oldX - 1][oldY - 1].getPawn().getFill() == WHITE) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX - 1][oldY - 1].setPawn(null);
-                GameState.actualField.setPawn(null);
-                GameState.actualField = null;
-            } else if (pawnColour == WHITE && fieldTable[oldX - 1][oldY - 1].getPawn().getFill() == BLACK) {
+                setPawnNull();
+            } else if (!blackPawn && fieldTable[oldX - 1][oldY - 1].getPawn().getFill() == BLACK) {
                 destinationField.setPawn(pawnToMove);
                 fieldTable[oldX - 1][oldY - 1].setPawn(null);
-                GameState.actualField.setPawn(null);
-                GameState.actualField = null;
+                setPawnNull();
             }
         } else {
             System.out.println("próba bicia - ruch niedozwolony!");
         }
+    }
+
+    private void setPawnNull() {
+        GameState.actualField.setPawn(null);
+        GameState.actualField = null;
     }
 
     private void selectPawn(Field fieldToSelect) {

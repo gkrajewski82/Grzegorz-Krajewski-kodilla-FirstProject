@@ -64,11 +64,6 @@ public class Checkers extends Application {
         startButton.setStyle("-fx-font: 12 arial; -fx-base: #8d3a3a");
         grid.add(startButton, 9, 0);
 
-        /*Button endOfTurn = new Button();
-        endOfTurn.setText("end of\nturn");
-        endOfTurn.setStyle("-fx-font: 12 arial; -fx-base: #8d3a3a");
-        grid.add(endOfTurn, 9, 1);*/
-
         startButton.setOnAction(newGame -> {
             for (int x = 0; x < 8; x++) {
                 for (int y = 0; y < 8; y++) {

@@ -10,7 +10,6 @@ public class FieldExecutor {
                 Field field = new Field(null, x, y);
                 field.setPrefSize(77, 77);
                 field.setStyle("-fx-background-color: transparent");
-                //field.setPadding(new Insets(2, 2, 2, 2));
                 fieldTable[x][y] = field;
             }
         }
