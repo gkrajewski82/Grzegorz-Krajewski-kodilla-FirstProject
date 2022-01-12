@@ -145,10 +145,12 @@ public class PawnLogic {
     }
 
     public static void markPawn(Pawn pawnToMark) {
-        pawnToMark.setOnMouseClicked(e -> pawnToMark.setEffect(new BoxBlur(10, 10, 50)));
+        pawnToMark.setEffect(new BoxBlur(10, 10, 50));
     }
 
     public static void unmarkPawn(Pawn pawnToUnmark) {
-        pawnToUnmark.setOnMouseClicked(e -> pawnToUnmark.setEffect(null));
+        if (pawnToUnmark != null) {
+            pawnToUnmark.setEffect(null);
+        }
     }
 }
